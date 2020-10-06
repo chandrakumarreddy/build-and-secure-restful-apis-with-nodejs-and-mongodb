@@ -1,5 +1,6 @@
 import express from 'express';
 import logger from 'morgan';
+import connect from './config/db';
 
 const result = require('dotenv').config({ encoding: 'latin1' });
 
@@ -8,6 +9,7 @@ if (result.error) {
 }
 
 const PORT = 3000;
+connect();
 
 const app = express();
 app.use(express.json());
