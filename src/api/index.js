@@ -1,6 +1,8 @@
 import express from 'express';
-import songsRouter from './resources/songs';
+import { songsRouter } from './resources/songs';
 
-const router = express.Router();
+const apiRouter = express.Router();
 
-router.route('/songs', songsRouter);
+apiRouter.use('/songs', songsRouter);
+
+export default apiRouter;
