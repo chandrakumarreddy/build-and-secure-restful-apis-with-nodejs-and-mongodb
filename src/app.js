@@ -2,6 +2,8 @@ import express from 'express';
 import logger from 'morgan';
 import connect from './config/db';
 
+import apiRouter from './api';
+
 const result = require('dotenv').config({ encoding: 'latin1' });
 
 if (result.error) {
@@ -20,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/favicon.ico', (req, res) => res.status(404));
 app.get('/sw.js', (req, res) => res.status(404));
 
-app.get('/', (req, res) => res.status(200).json({ 'api health': 'good' }));
+app.use('/api', apiRouter);
 
 app.get((req, res, next) => {
     const error = new Error('not found');
