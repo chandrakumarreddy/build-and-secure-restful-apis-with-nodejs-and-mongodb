@@ -20,8 +20,6 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/favicon.ico', (req, res) => res.status(404));
 app.get('/sw.js', (req, res) => res.status(404));
 
-app.get('/', (req, res) => res.status(200).json({ 'api health': 'good' }));
-
 app.get((req, res, next) => {
     const error = new Error('not found');
     error.message = 'Invalid route';
