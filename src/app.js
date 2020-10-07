@@ -1,10 +1,14 @@
+import path from 'path';
 import express from 'express';
 import logger from 'morgan';
 import connect from './config/db';
 
 import apiRouter from './api';
 
-const result = require('dotenv').config({ encoding: 'latin1' });
+const result = require('dotenv').config({
+    encoding: 'latin1',
+    path: path.join(__dirname, '../.env.local'),
+});
 
 if (result.error) {
     throw result.error;
