@@ -62,4 +62,18 @@ export default class SongsController {
             return;
         }
     }
+    static async findOne(req, res) {
+        try {
+            const { songId } = req.params;
+            const song = await SongModel.findById(songId);
+            if (!song) {
+                res.status(404).send('no song found');
+                return;
+            }
+            res.status(200).send(song);
+            return;
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    }
 }
