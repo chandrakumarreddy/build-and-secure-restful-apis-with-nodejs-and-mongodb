@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 const { Schema } = mongoose;
 
 const songsSchema = new Schema({
@@ -17,5 +18,6 @@ const songsSchema = new Schema({
         max: 5,
     },
 });
+songsSchema.plugin(mongoosePaginate);
 
 export default mongoose.model('Song', songsSchema);

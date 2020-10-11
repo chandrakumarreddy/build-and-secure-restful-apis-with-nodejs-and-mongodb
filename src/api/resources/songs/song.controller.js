@@ -4,10 +4,21 @@ import SongModel from './song.model';
 export default class SongsController {
     static async findAll(req, res) {
         try {
-            const songs = await SongModel.find();
+            const { offset = 0, limit = 10 } = req.query ?? {};
+            const songs = await SongModel.paginate(
+                {},
+                {
+                    offset,
+                    limit,
+                    customLabels: {
+                        docs: 'results',
+                    },
+                }
+            );
             res.status(200).send(songs);
             return;
         } catch (error) {
+            console.log(error);
             res.status(500).send(error);
             return;
         }
@@ -43,8 +54,23 @@ export default class SongsController {
                 res.status(400).json(messages);
                 return;
             }
-            const songRes = await SongModel.create(value);
-            res.status(200).json(songRes);
+            const newSong = await SongModel.create(value);
+            res.status(200).send(newSong);
+            return;
+        } catch (error) {
+            res.status(500).send(error);
+            return;
+        }
+    }
+    static async findOne(req, res) {
+        try {
+            const { songId } = req.params;
+            const song = await SongModel.findById(songId);
+            if (!song) {
+                res.status(404).send('no song found');
+                return;
+            }
+            res.status(200).send(song);
             return;
         } catch (error) {
             res.status(500).send(error);
