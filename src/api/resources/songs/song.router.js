@@ -5,5 +5,5 @@ export const songsRouter = express.Router();
 
 songsRouter
     .route('/')
-    .get(SongsController.getSongs)
-    .post(SongsController.postSongs);
+    .get(SongsController.findAll)
+    .post(SongsController.create);
