@@ -21,7 +21,7 @@ export default class SongsController {
             return;
         }
     }
-    static async postSongs(req, res) {
+    static async create(req, res) {
         try {
             const schema = Joi.object()
                 .options({ abortEarly: false })
