@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import SongModel from './song.model';
 
 export default class SongsController {
     static async findAll(req, res) {
@@ -17,6 +18,7 @@ export default class SongsController {
             res.status(200).send(songs);
             return;
         } catch (error) {
+            console.log(error);
             res.status(500).send(error);
             return;
         }
