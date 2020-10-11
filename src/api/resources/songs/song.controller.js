@@ -1,8 +1,25 @@
 import Joi from 'joi';
 
 export default class SongsController {
-    static getSongs(req, res) {
-        res.send('TO DO LIST ALL SONGS');
+    static async findAll(req, res) {
+        try {
+            const { offset = 0, limit = 10 } = req.query ?? {};
+            const songs = await SongModel.paginate(
+                {},
+                {
+                    offset,
+                    limit,
+                    customLabels: {
+                        docs: 'results',
+                    },
+                }
+            );
+            res.status(200).send(songs);
+            return;
+        } catch (error) {
+            res.status(500).send(error);
+            return;
+        }
     }
     static async postSongs(req, res) {
         try {
