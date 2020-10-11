@@ -1,10 +1,12 @@
 import Joi from 'joi';
+import SongModel from './song.model';
 
 export default class SongsController {
-    static getSongs(req, res) {
+    static findAll(req, res) {
         res.send('TO DO LIST ALL SONGS');
+        return;
     }
-    static async postSongs(req, res) {
+    static async create(req, res) {
         try {
             const schema = Joi.object()
                 .options({ abortEarly: false })
@@ -33,9 +35,14 @@ export default class SongsController {
                     return emptyObj;
                 }, {});
                 res.status(400).json(messages);
+                return;
             }
+            const songRes = await SongModel.create(value);
+            res.status(200).json(songRes);
+            return;
         } catch (error) {
             res.status(500).send(error);
+            return;
         }
     }
 }
