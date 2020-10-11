@@ -74,6 +74,7 @@ export default class SongsController {
             return;
         } catch (error) {
             res.status(500).send(error);
+            return;
         }
     }
 }
