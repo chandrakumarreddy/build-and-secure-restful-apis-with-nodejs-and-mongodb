@@ -4,3 +4,6 @@
 -   songs route
 -   songs model
 -   joi validations for songs api
+-   create songs
+-   fetchAll songs
+-   paginate fetchAll songs
