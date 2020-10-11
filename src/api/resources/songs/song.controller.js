@@ -2,9 +2,15 @@ import Joi from 'joi';
 import SongModel from './song.model';
 
 export default class SongsController {
-    static findAll(req, res) {
-        res.send('TO DO LIST ALL SONGS');
-        return;
+    static async findAll(req, res) {
+        try {
+            const songs = await SongModel.find();
+            res.status(200).send(songs);
+            return;
+        } catch (error) {
+            res.status(500).send(error);
+            return;
+        }
     }
     static async create(req, res) {
         try {
