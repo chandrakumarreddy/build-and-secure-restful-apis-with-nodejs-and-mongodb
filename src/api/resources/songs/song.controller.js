@@ -52,9 +52,14 @@ export default class SongsController {
                     return emptyObj;
                 }, {});
                 res.status(400).json(messages);
+                return;
             }
+            const newSong = await SongModel.create(value);
+            res.status(200).send(newSong);
+            return;
         } catch (error) {
             res.status(500).send(error);
+            return;
         }
     }
 }
