@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import SongModel from './song.model';
 
 export default class SongsController {
     static async findAll(req, res) {
@@ -17,11 +18,12 @@ export default class SongsController {
             res.status(200).send(songs);
             return;
         } catch (error) {
+            console.log(error);
             res.status(500).send(error);
             return;
         }
     }
-    static async postSongs(req, res) {
+    static async create(req, res) {
         try {
             const schema = Joi.object()
                 .options({ abortEarly: false })
@@ -50,7 +52,26 @@ export default class SongsController {
                     return emptyObj;
                 }, {});
                 res.status(400).json(messages);
+                return;
             }
+            const newSong = await SongModel.create(value);
+            res.status(200).send(newSong);
+            return;
+        } catch (error) {
+            res.status(500).send(error);
+            return;
+        }
+    }
+    static async findOne(req, res) {
+        try {
+            const { songId } = req.params;
+            const song = await SongModel.findById(songId);
+            if (!song) {
+                res.status(404).send('no song found');
+                return;
+            }
+            res.status(200).send(song);
+            return;
         } catch (error) {
             res.status(500).send(error);
         }

@@ -7,3 +7,4 @@
 -   create songs
 -   fetchAll songs
 -   paginate fetchAll songs
+-   findOne song
