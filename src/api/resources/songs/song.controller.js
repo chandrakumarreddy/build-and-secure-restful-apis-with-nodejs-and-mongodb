@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import songModel from './song.model';
 import SongModel from './song.model';
 
 export default class SongsController {
@@ -72,6 +73,51 @@ export default class SongsController {
             }
             res.status(200).send(song);
             return;
+        } catch (error) {
+            res.status(500).send(error);
+            return;
+        }
+    }
+    static async delete(req, res) {
+        try {
+            const { songId } = req.params;
+            const song = await songModel.findByIdAndRemove(songId);
+            if (!song) {
+                res.status(404).json({ error: 'No song found' });
+                return;
+            }
+            res.status(200).send(song);
+        } catch (error) {
+            res.status(500).send(error);
+            return;
+        }
+    }
+    static async update(req, res) {
+        try {
+            const schema = Joi.object().keys({
+                title: Joi.string().optional(),
+                url: Joi.string().optional(),
+                rating: Joi.number().integer().min(0).max(5).optional(),
+            });
+            const { value, error } = await schema.validate(req.body);
+            if (error && error.details) {
+                const messages = error.details.reduce((emptyObj, err) => {
+                    emptyObj[err.context.label] = err.message;
+                    return emptyObj;
+                }, {});
+                res.status(400).json(messages);
+                return;
+            }
+            const song = await songModel.findByIdAndUpdate(
+                req.params.songId,
+                value,
+                { new: true }
+            );
+            if (!song) {
+                res.status(404).json({ error: 'No song found' });
+                return;
+            }
+            res.status(200).send(song);
         } catch (error) {
             res.status(500).send(error);
             return;
