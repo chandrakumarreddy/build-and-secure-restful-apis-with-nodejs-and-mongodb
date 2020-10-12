@@ -8,3 +8,5 @@
 -   fetchAll songs
 -   paginate fetchAll songs
 -   findOne song
+-   update song
+-   delete song
